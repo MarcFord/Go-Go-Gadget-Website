@@ -15,7 +15,7 @@ type Pong struct {
 	Timestamp string `json:"timestamp"`
 }
 
-func getIndex(response http.ResponseWriter, request *http.Request) {
+func pingHandler(response http.ResponseWriter, request *http.Request) {
 	// Set Response Header
 	response.Header().Set("Content-Type", "application/json")
 	var pong Pong
@@ -26,6 +26,11 @@ func getIndex(response http.ResponseWriter, request *http.Request) {
 }
 
 func main()  {
+	// Configure Logging
+	log.SetFormatter(&log.JSONFormatter{})
+	log.SetReportCaller(true)
+	log.SetLevel(log.DebugLevel)
+
 	// CMD Flags
 	portPtr := flag.Int("port", 3000, "Port for server to run on default 3000")
 	srvAddressPtr := flag.String("server", "localhost", "Server address default localhost")
@@ -36,7 +41,7 @@ func main()  {
 	router := mux.NewRouter()
 
 	// Route handlers
-	router.HandleFunc("/", getIndex).Methods("GET")
+	router.HandleFunc("/ping", pingHandler).Methods("GET")
 
 	// Run Server
 	address := fmt.Sprintf("%s:%d", *srvAddressPtr, *portPtr)

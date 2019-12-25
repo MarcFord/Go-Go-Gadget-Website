@@ -11,7 +11,7 @@ RUN mkdir /var/go-go-gadget-website
 WORKDIR /var/go-go-gadget-website/
 
 # Copy the Pre-built binary file from the previous stage
-COPY --from=builder /app/web_app .
+COPY --from=builder /app/web .
 
-
-CMD ./web_app
+EXPOSE 3000
+CMD ./web -port 3000 -server 0.0.0.0
