@@ -61,3 +61,6 @@ src/tmp/*
 
 # Code Recommenders
 .recommenders/
+
+################### Project Ignores #############################
+web/web
